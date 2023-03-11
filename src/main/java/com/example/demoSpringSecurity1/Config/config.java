@@ -38,6 +38,10 @@ public class config {
                 .requestMatchers("/user/addUser","/user/deleteUser","/user/**")
                 .permitAll()
                 .and()
+                .authorizeHttpRequests()
+                .requestMatchers("/user/insert")
+                .hasRole("ADMIN")
+                .and()
                 .formLogin()
                 .and()
                 .build();
