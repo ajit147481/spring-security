@@ -38,4 +38,5 @@ public class Controller {
     public String addUser(@RequestParam("id") Integer id){
         return service.deleteUser(id);
     }
+
 }
