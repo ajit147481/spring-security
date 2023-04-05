@@ -43,6 +43,7 @@ public class config {
                 .hasRole("ADMIN")
                 .and()
                 .formLogin()
+//                .loginPage("")
                 .and()
                 .build();
     }

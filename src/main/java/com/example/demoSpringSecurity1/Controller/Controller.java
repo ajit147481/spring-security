@@ -25,6 +25,7 @@ public class Controller {
     public String deleteUser(){
         return "this is delete user";
     }
+
     @GetMapping("/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String updateUser(){
