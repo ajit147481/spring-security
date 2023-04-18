@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class userDetailServiceUser implements UserDetailsService {
+public class UserDetailServiceUser implements UserDetailsService {
     @Autowired
     com.example.demoSpringSecurity1.Repository.userRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       Optional<UserInfo> user=userRepository.findByName(username);
+       Optional<UserInfo> user=userRepository.findByEmail(username);
        return user.map(userInfo -> new userInfoUserDetails(userInfo))
                .orElseThrow(()-> new UsernameNotFoundException("user not found "+username));
     }

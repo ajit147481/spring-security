@@ -1,14 +1,23 @@
 package com.example.demoSpringSecurity1.Controller;
 
+import com.example.demoSpringSecurity1.JWT.AuthRequest;
 import com.example.demoSpringSecurity1.Entity.UserInfo;
+import com.example.demoSpringSecurity1.JWT.JwtService;
 import com.example.demoSpringSecurity1.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
 public class Controller {
+    @Autowired
+    AuthenticationManager authenticationManager;
+    @Autowired
+    JwtService jwtService;
     @Autowired
     Service service;
     @GetMapping("/add")
@@ -40,4 +49,13 @@ public class Controller {
         return service.deleteUser(id);
     }
 
+    @PostMapping("/authenticate")
+    public String generateToken(@RequestBody()AuthRequest authRequest){
+        Authentication authentication= authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(),authRequest.getPassword()));
+        if(authentication.isAuthenticated()){
+            return jwtService.generateToken(authRequest.getEmail());
+        }else {
+            throw new RuntimeException("user is invalid");
+        }
+    }
 }
